@@ -1,6 +1,7 @@
 package com.kangleiit.manipuridictionary.netwokclient;
 
 import com.kangleiit.manipuridictionary.model.InputResult.InputResult;
+import com.kangleiit.manipuridictionary.model.login.LoginResult;
 import com.kangleiit.manipuridictionary.model.wordMeanings.WordMeanings;
 
 import retrofit2.Call;
@@ -23,4 +24,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("find_word")
     Call<WordMeanings> getWordMeanings(@Field("md_key") String apiKey, @Field("keyword")String keyword);
+
+    @FormUrlEncoded
+    @POST("loginwithgoogle")
+    Call<LoginResult> login(@Field("md_key") String apiKey, @Field("email")String email, @Field("google_id")String google_id,@Field("img_url")String img_url);
 }

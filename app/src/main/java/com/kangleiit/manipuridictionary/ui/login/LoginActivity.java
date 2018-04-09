@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -16,19 +15,24 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.kangleiit.manipuridictionary.R;
+import com.kangleiit.manipuridictionary.ui.base.BaseActivity;
 import com.kangleiit.manipuridictionary.ui.mainscreen.MainActivity;
+import com.kangleiit.manipuridictionary.utils.Constants;
+import com.kangleiit.manipuridictionary.utils.Utilities;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener, LoginView{
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
     private GoogleApiClient mGoogleApiClient;
     ProgressDialog mProgressDialog;
     SignInButton btnLogin;
+    LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        presenter=new LoginPresenter(this);
         btnLogin = (SignInButton) findViewById(R.id.btnLogin);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -68,11 +72,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             Log.e(TAG, "Name: " + personName + ", email: " + email
                     + ", Image: " + personPhotoUrl);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("personPhotoUrl", personPhotoUrl);
-            intent.putExtra("personName", personName);
-            intent.putExtra("email", email);
-            startActivity(intent);
+
+
 
 
         } else {
@@ -119,5 +120,17 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onBackPressed() {
         super.onBackPressed();
         hideProgressDialog();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
+    @Override
+    public void onLoginSuccess(String data) {
+        Utilities.updateStringPref(this, Constants.KEY_SECRET,data);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }
