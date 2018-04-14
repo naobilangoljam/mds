@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.kangleiit.manipuridictionary.R;
 import com.kangleiit.manipuridictionary.ui.account.AccountActivity;
+import com.kangleiit.manipuridictionary.ui.search.SearchFragment;
 import com.kangleiit.manipuridictionary.ui.searchResult.SearchResultFragment;
 
 import java.util.ArrayList;
@@ -76,14 +77,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         init();
         setupNavigation();
+        SearchFragment fragment = SearchFragment.newInstance("");
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment, fragment).commit();
         tvSpeechInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 searchDialog.show();
-                //startActivity(new Intent(MainActivity.this, SearchActivity.class));
-                /*SearchFragment fragment=SearchFragment.newInstance("");
-                getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment,fragment).commit();*/
+               /* startActivity(new Intent(MainActivity.this, SearchActivity.class));*/
+
             }
         });
     }

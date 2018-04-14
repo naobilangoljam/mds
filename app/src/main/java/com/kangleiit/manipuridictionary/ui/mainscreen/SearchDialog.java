@@ -95,7 +95,7 @@ public class SearchDialog extends Dialog implements SearchAdapter.InputResultLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.fragment_search);
+        setContentView(R.layout.dialog_search);
         ButterKnife.bind(this);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         adapter = new SearchAdapter(this, results);
